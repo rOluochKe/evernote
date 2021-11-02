@@ -3,13 +3,22 @@ import React, { useContext, useReducer } from 'react'
 // initial state
 const initialState = {
   url: 'http://evernoteapp-ror-r-api.herokuapp.com',
+  token: null,
+  username: null,
 }
 
 // reducer
 const reducer = (state, action) => {
+  let newState
+
   switch (action.type) {
+    case 'auth':
+      newState = { ...state, ...action.payload }
+      return newState
+      break
     default:
       return state
+      break
   }
 }
 
