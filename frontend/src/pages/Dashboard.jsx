@@ -1,6 +1,6 @@
 import React from 'react'
 import { useAppState } from '../AppState.jsx'
-import { Route } from 'react-router-dom'
+import { Link, Route } from 'react-router-dom'
 import Form from '../components/Form.jsx'
 
 const Dashboard = (props) => {
@@ -41,6 +41,26 @@ const Dashboard = (props) => {
             <div className='note' key={note.id}>
               <h2>{note.title}</h2>
               <h4>{note.body}</h4>
+              <button
+                onClick={() => {
+                  dispatch({ type: 'select', payload: note })
+                  props.history.push('/dashboard/edit')
+                }}
+              >
+                Edit Note
+              </button>
+              <button
+                onClick={() => {
+                  fetch(url + '/notes/' + note.id, {
+                    method: 'delete',
+                    headers: {
+                      Authorization: 'bearer ' + token,
+                    },
+                  }).then(() => getNotes())
+                }}
+              >
+                Delete Note
+              </button>
             </div>
           ))}
         </ul>

@@ -9,11 +9,11 @@ const Nav = () => {
     <header>
       <h1>Evernote Note Taking App</h1>
       <nav>
-        <Link to='/'>
-          <div>Home</div>
-        </Link>
         {!state.token ? (
           <>
+            <Link to='/'>
+              <div>Home</div>
+            </Link>
             <Link to='/auth/signup'>
               <div>Sign Up</div>
             </Link>
