@@ -1,7 +1,54 @@
 import React from 'react'
+import { useAppState } from '../AppState.jsx'
+import { Route } from 'react-router-dom'
+import Form from '../components/Form.jsx'
 
-const Dashboard = () => {
-  return <div>Dashboard</div>
+const Dashboard = (props) => {
+  const { state, dispatch } = useAppState()
+  const { token, url, notes, username } = state
+
+  const getNotes = async () => {
+    const response = await fetch(url + '/notes/', {
+      method: 'get',
+      headers: {
+        Authorization: 'bearer ' + token,
+      },
+    })
+    const notes = await (await response).json()
+
+    dispatch({ type: 'getnotes', payload: notes })
+  }
+
+  React.useEffect(() => {
+    getNotes()
+  }, [])
+
+  const loaded = () => {
+    return (
+      <div className='dashboard'>
+        <h1>{username}'s' Notes</h1>
+        <Link to='/dashboard/new'>
+          <button>Create New Note</button>
+        </Link>
+
+        <Route
+          path='/dashboard/:action'
+          render={(rp) => <Form {...rp} getNotes={getNotes} />}
+        />
+
+        <ul>
+          {notes.map((note) => (
+            <div className='note' key={note.id}>
+              <h2>{note.title}</h2>
+              <h4>{note.body}</h4>
+            </div>
+          ))}
+        </ul>
+      </div>
+    )
+  }
+
+  return notes ? loaded() : <h1>Loading...</h1>
 }
 
 export default Dashboard

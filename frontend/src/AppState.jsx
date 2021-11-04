@@ -5,6 +5,16 @@ const initialState = {
   url: 'https://evernoteapp-ror-r-api.herokuapp.com',
   token: null,
   username: null,
+  notes: null,
+  new: {
+    title: '',
+    body: '',
+  },
+  edit: {
+    id: 0,
+    title: '',
+    body: '',
+  },
 }
 
 // reducer
@@ -21,6 +31,10 @@ const reducer = (state, action) => {
       window.localStorage.removeItem('auth')
       return newState
       break
+    case 'getnotes':
+      newState = { ...state, notes: action.payload }
+      return newState
+      break
     default:
       return state
       break
@@ -35,7 +49,7 @@ export const AppState = (props) => {
   const [state, dispatch] = useReducer(reducer, initialState)
 
   return (
-    <AppContext.Provider value={(state, dispatch)}>
+    <AppContext.Provider value={{ state, dispatch }}>
       {props.children}
     </AppContext.Provider>
   )
