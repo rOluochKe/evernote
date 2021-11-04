@@ -8,6 +8,6 @@
 
 - https://evernoteapp-ror-r-api.herokuapp.com/
 
-## Frontend API
+## Frontend
 
--
+- https://evernote-ror-react.netlify.app/
