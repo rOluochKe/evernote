@@ -2,7 +2,7 @@ import React, { useContext, useReducer } from 'react'
 
 // initial state
 const initialState = {
-  url: 'http://evernoteapp-ror-r-api.herokuapp.com',
+  url: 'https://evernoteapp-ror-r-api.herokuapp.com',
   token: null,
   username: null,
 }
@@ -14,6 +14,11 @@ const reducer = (state, action) => {
   switch (action.type) {
     case 'auth':
       newState = { ...state, ...action.payload }
+      return newState
+      break
+    case 'logout':
+      newState = { ...state, token: null, username: null }
+      window.localStorage.removeItem('auth')
       return newState
       break
     default:

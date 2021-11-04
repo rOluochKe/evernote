@@ -15,6 +15,11 @@ const Auth = (props) => {
     if (userData) {
       const { token, user } = userData
       dispatch({ type: 'auth', payload: { token, username: user.username } })
+      window.localStorage.setItem(
+        'auth',
+        JSON.stringify({ token, username: user.username })
+      )
+      props.histtory.push('/dashboard')
     }
   }, [userData])
 
@@ -51,7 +56,7 @@ const Auth = (props) => {
   }
 
   return (
-    <div>
+    <div className='auth'>
       <form onSubmit={handleSubmit}>
         <input
           type='text'
